@@ -1,6 +1,6 @@
 pkgsSelf: pkgsSuper:
 let
-  composeOverlays =
+  composeOverlaysDeep =
     with pkgsSuper.lib;
     foldl
       (overlay: overlayAccum:
@@ -12,7 +12,10 @@ let
       (_: _: {}) # Empty overlay
   ; 
 in
-composeOverlays [
+composeOverlaysDeep [
+  (_: _: {
+    ek.lib.composeOverlaysDeep = composeOverlaysDeep;
+  })
   (import ./lib/haskell)
   (import ./lib/hello.nix)
 ] pkgsSelf pkgsSuper
