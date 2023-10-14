@@ -1,3 +1,4 @@
-with
-  import <nixpkgs> { overlays = [ (import ./default.nix) ]; };
-ek
+let
+  nixpkgs-ek = import <nixpkgs>
+    { overlays = [ (import ./default.nix) ]; };
+in nixpkgs-ek.ek

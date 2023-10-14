@@ -1,21 +1,8 @@
 pkgsSelf: pkgsSuper:
 let
-  composeOverlaysDeep =
-    with pkgsSuper.lib;
-    foldl
-      (overlay: overlayAccum:
-        pkgsSelf':
-        pkgsSuper':
-        recursiveUpdate
-          (overlayAccum pkgsSelf' pkgsSuper')
-          (overlay      pkgsSelf' pkgsSuper'))
-      (_: _: {}) # Empty overlay
-  ; 
+  pkgsBase = import ./pkgs-lib/base.nix pkgsSelf pkgsSuper ;
 in
-composeOverlaysDeep [
-  (_: _: {
-    ek.lib.composeOverlaysDeep = composeOverlaysDeep;
-  })
-  (import ./lib/haskell)
-  (import ./lib/hello.nix)
-] pkgsSelf pkgsSuper
+pkgsBase.ek.lib.overlay.compose.recursive'
+  [ (import ./pkgs-lib/base.nix)
+    (import ./pkgs-haskell)
+  ]
