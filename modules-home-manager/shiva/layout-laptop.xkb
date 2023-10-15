@@ -1,0 +1,27 @@
+// /etc/X11/xkb
+xkb_keymap {
+	xkb_keycodes  { include "evdev+aliases(qwerty)"	};
+
+
+	xkb_types     { include "complete"	};
+
+	xkb_compat    {
+		        include "complete"
+		        interpret Super_L { action = SetMods(modifiers=Mod3); };
+		      };
+			
+	xkb_symbols   {
+		        include "pc+gb+inet(evdev)"
+			// include "pc+us+inet(evdev)"
+                        // key <LatW> { [ Super_L ] };
+
+			key <CAPS> { [ F8 ] };
+			//modifier_map Mod3 { F8 };
+			// modifier_map Mod3 { F18 };
+
+			// key <CAPS> { [ Super_L ] };
+			//modifier_map Mod3 { Super_L };
+	              };
+		      
+	xkb_geometry  { include "pc(pc104)"	};
+};
