@@ -1,4 +1,4 @@
 _: pkgsSuper:
-pkgsSuper.ek.lib.overlay.compose.recursive'
+pkgsSuper.ek.lib.overlay.combine-many.recursive-this
   [ (import ./base.nix)
   ]

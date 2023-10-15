@@ -1,22 +1,32 @@
 pkgsSelf: pkgsSuper:
 let
   lib = pkgsSuper.lib;
-  overlay-mappend = f: m1: m2:
-    self: super: f (m1 self super) (m2 self super) ;
+  overlay-combine-with = combine-function: m1: m2:
+    self: super: combine-function (m1 self super) (m2 self super) ;
   
-  overlay-op-recursive = overlay-mappend lib.recursiveUpdate;
-  # is comutative
+  overlay-combine-recursive = overlay-combine-with lib.recursiveUpdate;
+  # is mostly comutative (looking through the perspective of attribute structure)
+  # e.g
+  #   lib.recursiveUpdate { hi.hi = 2; } { hi = 3; } => { hi = 3 }
+  #   lib.recursiveUpdate { hi = 3; } { hi.hi = 2; } => { hi.hi = 2 }
+  # truly commutative variant could be recursive update, but throwing an error
+  # when something overrites a value with an attrset or an attrset with a value
+  
+  # this way will know when we are accidentally overriding already defined values.
 
-  overlay-op-overlap = overlay-mappend (a: b: a // b);
+  overlay-combine-overlap = overlay-combine-with (a: b: a // b);
   # is associative
   
-  overlay-identity = (_: _: {});
-  overlay-compose-recursive = lib.foldl overlay-op-recursive overlay-identity;
-  overlay-compose-overlap = lib.foldl overlay-op-overlap overlay-identity;
-
-  overlay-compose-recursive' =
+  overlay-identity = _: _: {};
+  
+  overlay-combine-many-recursive =
+    lib.foldl overlay-combine-recursive overlay-identity;
+  overlay-combine-many-overlap =
+    lib.foldl overlay-combine-overlap overlay-identity;
+  
+  overlay-combine-many-recursive-this =
     overlays:
-    overlay-compose-recursive
+    overlay-combine-many-recursive
       overlays
       pkgsSelf
       (pkgsSuper // export)
@@ -24,16 +34,16 @@ let
 
   export =
     { ek.lib.overlay =
-        { mappend = overlay-mappend;
-          identity =  _: _: {};
-          op =
-            { recursive = overlay-op-recursive;
-              overlap = overlay-op-overlap;
+        { overlay-combine-with = overlay-combine-with;
+          identity = overlay-identity;
+          combine =
+            { recursive = overlay-combine-recursive;
+              overlap = overlay-combine-overlap;
             };
-          compose =
-            { recursive = overlay-compose-recursive;
-              recursive' = overlay-compose-recursive';
-              overlap = overlay-compose-overlap;
+          combine-many =
+            { recursive = overlay-combine-many-recursive;
+              recursive-this = overlay-combine-many-recursive-this;
+              overlap = overlay-combine-many-overlap;
             };
         };
     };
