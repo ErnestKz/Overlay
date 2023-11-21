@@ -2,7 +2,7 @@
 {
   home.packages = with pkgs;
     [ chromium
-      minmacs
+      # minmacs
 
       xorg.xkbcomp
       htop

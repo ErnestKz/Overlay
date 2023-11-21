@@ -2,6 +2,14 @@
 {
   home.sessionVariables =
     { SHELL = "zsh"; };
+  
+  programs.keychain = {
+    enable = true;
+    enableXsessionIntegration = true;
+    enableZshIntegration = true;
+    keys = [ "id_ed25519" ];
+  };
+  
   programs.zsh =
     { enable = true;
       history.size = 10000;

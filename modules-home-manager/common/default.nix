@@ -1,12 +1,6 @@
 { pkgs, ... }:
 {
-  nixpkgs.overlays = [
-    # pkgs.hi
-    # cannot access pkgs, it causes infinite recursion
-    # because overlays must be causing a strict evaluation of some sort
-  ];
-
-  
+  nixpkgs.overlays = [ ];
   home.stateVersion = "23.05";
   imports = 
     [ ./packages.nix

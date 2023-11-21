@@ -2,7 +2,7 @@
 with builtins;
 with pkgs.lib;
 {
-  nixpkgs.overlays = [ ../.. ];
+  nixpkgs.overlays = [ ../../flake ];
   
   nixpkgs.config = {
     allowUnfreePredicate =
