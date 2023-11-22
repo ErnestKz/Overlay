@@ -1,4 +1,4 @@
-## `git`
+## `git.nix`
 
 We want to have the history of a package available through its nix expression.
 
