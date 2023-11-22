@@ -1,3 +1,7 @@
+## `git`
+
+We want to have the history of a package available through its nix expression.
+
 ## `overlay-merging.nix` 
 Buildings blocks of this Overlay repo. Logic for combining overlays.
 
