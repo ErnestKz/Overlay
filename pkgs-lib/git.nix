@@ -43,4 +43,22 @@ in
         { "${revision}" = ek.git.checkout "creating-history" gitDir revision ; } // history_acc)
       {}
       (ek.git.read-rev-list gitDir) ;
+
+  ek.git.clone = pkgsSelf.stdenv.mkDerivation {
+    name = "clone";
+    buildInputs = [ pkgsSelf.openssh ];
+    phases = [ "buildPhase" "installPhase" ];
+    buildPhase = ''
+      ssh-keyscan -t rsa github.com >> ./known_hosts
+      echo $key
+      echo $key >> ssh -i /dev/stdin -o UserKnownHostsFile=./known_hosts -T git@github.com
+      # ${pkgsSelf.git}/bin/git clone git@github.com:ErnestKz/Overlay.git
+      
+    '';
+    installPhase = "cp -r ./Overlay $out/";
+    impureEnvVars = [ "key" ];
+    outputHashAlgo = "sha256";
+    outputHashMode = "recursive";
+    outputHash = "sha256-Om4BcXK76QrExnKcDzw574l+h75C8yK/EbccpbcvLsQ=";
+  };
 }
