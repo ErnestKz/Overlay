@@ -1,5 +1,6 @@
 let
   outputs = import ../flake;
-  nixpkgs = import outputs.deps.nixpkgs { overlays = [ outputs.overlay ]; };
+  nixpkgs = import outputs.inputs.nixpkgs-flake
+    { overlays = [ outputs.Overlay ]; };
 in nixpkgs
 

@@ -1,18 +1,25 @@
-{ home-manager ? <home-manager>
-, nixos-hardware ? <nixos-hardware>
-}:
+inputs
+  @{ home-manager ? <home-manager>
+   , nixos-hardware ? <nixos-hardware>
+   , disko ? <disko>
+   , impermanence ? <impermanence>
+   , ...  
+   }:
 pkgsSelf: pkgsSuper:
 let
-  pkgsOverlayLib = import ./pkgs-lib/overlay-merging.nix pkgsSelf pkgsSuper ;
-  dependencies = _: _:
-    { ek.deps.home-manager = home-manager ;
-      ek.deps.nixos-hardware = nixos-hardware ;
-      ek.deps.overlay = import ./. { inherit home-manager nixos-hardware ; };
-      ek.deps.src = ./.;
+  pkgs-with-merging-lib =
+    import ./pkgs-lib/overlay-merging.nix pkgsSelf pkgsSuper ;
+  ek-sources = _: _:
+    { ek.inputs = inputs;
+      ek.Overlay = import ./. inputs;
+      ek.src = ./.;
     };
 in
-pkgsOverlayLib.ek.lib.overlay.combine-many.recursive-this
-  [ dependencies
+pkgs-with-merging-lib.ek.lib
+  .overlay
+  .combine-many
+  .recursive-this
+  [ ek-sources
     (import ./pkgs-lib)
     (import ./pkgs-haskell)
     (import ./modules-home-manager)
