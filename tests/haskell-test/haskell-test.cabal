@@ -68,6 +68,7 @@ executable haskell-test
 
     -- Other library packages from which modules are imported.
     build-depends:    base
+                    , aeson
 
     -- Directories containing source files.
     hs-source-dirs:   app
