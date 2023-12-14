@@ -31,3 +31,14 @@ fileset.fileFilter predicate a
 fileset.toSource { root = ./.; fileset = my-fs; }
 # only local files at eval time supported 
 ```
+
+# nixpkgs lib
+- https://nixos.org/manual/nixpkgs/unstable/#sec-functions-library-customisation
+
+### Extending and Recursive Package Set
+- https://www.youtube.com/watch?v=BgnUFtd1Ivs
+
+- `lib.customisation.makeScope`
+  - make a set of packages with a common scope
+  - used for `callPackage`-like functions
+  - the pattern of taking arguments to a function that returns a derivation

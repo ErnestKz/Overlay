@@ -26,3 +26,9 @@
 - Overlay - CI Management
 - Overlay - Test Management
 - Overlay - Eco System Management
+
+- Tests and Visualisations for this package set/ repository:
+  - Visualise the tree structure of the exports.
+  - Scaffolding which allows for:
+    - definition of tests
+	- execution of tests and subset of tests

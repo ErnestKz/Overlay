@@ -1,6 +1,6 @@
 let
-  outputs = import ../flake;
-  nixpkgs = import outputs.inputs.nixpkgs-flake
-    { overlays = [ outputs.Overlay ]; };
-in nixpkgs
+  sources = (import ../flake).sources;
+  Overlay = import sources.Overlay sources;
+  nixpkgs = import sources.nixpkgs { overlays = [ Overlay ]; };
+in nixpkgs.ek.modules.nixos.shiva
 

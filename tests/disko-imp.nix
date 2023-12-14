@@ -44,8 +44,8 @@ let
 
   disko-result = disko-lib.disko disko-module-config;
 in
-# pkgs.writeScriptBin "disko-script" disko-result
-imp.nixosModules.impermanence {}
+pkgs.writeScriptBin "disko-script" disko-result
+# imp.nixosModules.impermanence {}
 # imp.nixosModule {}
 
   

@@ -6,8 +6,6 @@
   inputs.disko.url = "github:nix-community/disko";
   inputs.impermanence.url = "github:nix-community/impermanence";
 
-  # Maybe instead of flake, just a source pin?
-  
   outputs =
     { self
     , nixpkgs-unstable
@@ -17,17 +15,25 @@
     , impermanence
     }:
     let
+      inherit (nixpkgs-unstable) lib;
       inputs =
-        { nixpkgs-flake = nixpkgs-unstable ;
+        { nixpkgs = nixpkgs-unstable ;
           inherit
             nixos-hardware
             home-manager
             disko
             impermanence ;
         };
+      sources =
+        (lib.mapAttrs
+          (_: input: input.outPath)
+          inputs) // { Overlay = ../.; };
     in 
-      { Overlay    = import ../. inputs;
-        Overlay-fn = import ../.;
-        inputs     = inputs;
+      { Overlay' = import ../. sources;
+        Overlay  = import ../.;
+        inherit
+          inputs
+          sources
+        ;
       };
 }
