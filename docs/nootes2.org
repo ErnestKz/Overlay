@@ -1,0 +1,60 @@
+have special args on both home-manager and nixos module definitions
+therefore utmost likely to have to call from Overlay
+therefore provide utilities to:
+- provide utility to do:
+  - evalNixOsModulesWithEk
+  - evalHomeManagerModulesWithEk
+  - and perhaps even a callPackage like function for adding special args
+- provide an attribute which contains the evaluated config
+  - for home-manager, and nixos modules
+
+
+A custom nixpkgs, with the overlay applied.
+#+begin_src nix
+with import <nixpkgs> { overlays = [ (import <ek> {}).Overlay ] };
+#+end_src
+
+A pinned nixpkgs, with the overlay applied.
+#+begin_src nix
+with import <ek> {};
+#+end_src
+
+
+
+
+flow for exact installation:
+- nix-channel add Overlay ..
+- nix-build -E '(import <ek> {}).ek.system.nixos.shiva'
+- nixos-switch/install the result
+
+- then after those steps, need to make the config repo conducive to iteration and mutation.
+  - set up the overlay to point to local copy?
+    - import swizzles on env variables?
+    - still have a channel?
+- something like that
+
+
+few contexts in which dependencies can be swizzled:
+- importing <ek> itself
+  - either the one stored by the channel
+  - or the one that is pointed to by the env variable
+  - this would mean evaluating of <ek> would be a bit special
+    - two input variables:
+      - useEnvLoc - directly provided upon evaluation
+      - envLoc - implicitly looked up in the environment
+
+
+- defining a package set
+
+
+- defining dependencies  
+
+
+  
+
+
+- nix-channel add Overlay ..
+- write file:
+  - that picks the modules it wants
+  - in this case may want more granular tools to use
+

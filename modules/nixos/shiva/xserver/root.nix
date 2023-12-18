@@ -1,10 +1,9 @@
-{ ... }:
-{
-  services.xserver.enable = true;
+{ ek, ... }:
+{ services.xserver.enable = true;
   imports =
-    [ ./touchpad.nix
-      ./display-manager.nix
-      ./xdg-dbus.nix
-      ./video-drivers.nix
+    [ ek.modules.nixos.shiva.xserver.touchpad
+      ek.modules.nixos.shiva.xserver.display-manager
+      ek.modules.nixos.shiva.xserver.xdg-dbus
+      ek.modules.nixos.shiva.xserver.video-drivers
     ];
 }

@@ -1,6 +1,4 @@
 { ... }:
-{
-  networking.hostName = "shiva";
-  
+{ networking.hostName = "shiva";
   networking.networkmanager.enable = true;
 }

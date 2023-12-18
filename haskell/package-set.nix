@@ -1,6 +1,6 @@
 pkgsSelf: pkgsSuper:
 let
-  hext = pkgsSelf.ek.haskell.extension;
+  hext = pkgsSelf.ek.haskell.extensions;
 in    
 {
   ek.haskell.package-set.ghc94 =

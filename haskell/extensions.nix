@@ -1,6 +1,7 @@
 pkgsSelf: pkgsSuper:
 let
   hext = pkgsSelf.ek.haskell.extensions;
+  hlib = pkgsSuper.haskell.lib;
   lib = pkgsSuper.lib;
   hlib = pkgsSuper.haskell.lib;
 in  
@@ -66,10 +67,15 @@ in
 
    ek.haskell.extensions.package-set-for.ghc94 = hpkgsSelf: hpkgsSuper:
     { effectful-plugin = hpkgsSelf.callHackage "effectful-plugin" "1.1.0.1" {} ;
+      effectful-th = hlib.doJailbreak hpkgsSuper.effectful-th;
+      th-abstraction = hpkgsSelf.callHackage "th-abstraction" "0.6.0.0" {} ;
+      cleff = hlib.markUnbroken hpkgsSuper.cleff;
     };
 
   ek.haskell.extensions.package-set-for.ghc98 = hpkgsSelf: hpkgsSuper:
     { effectful-plugin = hpkgsSelf.callHackage "effectful-plugin" "1.1.0.1" {} ;
+      th-abstraction = hpkgsSelf.callHackage "th-abstraction" "0.6.0.0" {} ;
+      effectful-th = hlib.doJailbreak hpkgsSuper.effectful-th;
     };
   
   ek.haskell.extensions.package-set-for.ghc94-fast =

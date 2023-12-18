@@ -37,4 +37,11 @@ lib.makeScope pkgs.newScope (self: {
       .system
       .build
       .toplevel;
+
+  nixosSystemSpecial'' =
+    self.nixosSystemSpecial
+      .config
+      .system
+      .build
+      .vm;
 })

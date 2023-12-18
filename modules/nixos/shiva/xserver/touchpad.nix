@@ -1,8 +1,5 @@
 { ... }:
-{
-  services.xserver =
-    { libinput.touchpad.accelSpeed = "-2.0"; 
-    };
+{ services.xserver.libinput.touchpad.accelSpeed = "-2.0"; 
 }
 
 

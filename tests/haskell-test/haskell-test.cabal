@@ -64,14 +64,25 @@ executable haskell-test
     -- other-modules:
 
     -- LANGUAGE extensions used by modules in this package.
-    -- other-extensions:
+    default-extensions: TemplateHaskell
+                      , TypeFamilies
+                      , TypeFamilyDependencies
+                      , DataKinds
+                      , LambdaCase
 
     -- Other library packages from which modules are imported.
     build-depends:    base
-                    , aeson
+                    , effectful
+                    , effectful-core
+                    , effectful-th
+                    , effectful-plugin
+
+                    -- , cleff
+                    -- , cleff-plugin
 
     -- Directories containing source files.
     hs-source-dirs:   app
+    ghc-options: -fplugin=Effectful.Plugin
 
     -- Base language which the package is written in.
-    default-language: Haskell2010
+    default-language: GHC2021

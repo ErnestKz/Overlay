@@ -1,6 +1,5 @@
 { pkgs, ... }:
-{
-  programs.light.enable = true;
+{ programs.light.enable = true;
   services.xserver.displayManager =
     { sx.enable = true;
     };

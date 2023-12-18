@@ -1,6 +1,5 @@
 { ... }:
-{
-  users.users.ek = {
+{ users.users.ek = {
     isNormalUser = true;
     initialPassword = "";
     extraGroups =
