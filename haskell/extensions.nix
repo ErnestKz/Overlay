@@ -3,7 +3,6 @@ let
   hext = pkgsSelf.ek.haskell.extensions;
   hlib = pkgsSuper.haskell.lib;
   lib = pkgsSuper.lib;
-  hlib = pkgsSuper.haskell.lib;
 in  
 {
   ek.haskell.extensions.with-callCabal = hpkgsSelf: hpkgsSuper:
@@ -65,31 +64,56 @@ in
        # base = { boot = "base"; };
      };
 
-   ek.haskell.extensions.package-set-for.ghc94 = hpkgsSelf: hpkgsSuper:
-    { effectful-plugin = hpkgsSelf.callHackage "effectful-plugin" "1.1.0.1" {} ;
-      effectful-th = hlib.doJailbreak hpkgsSuper.effectful-th;
-      th-abstraction = hpkgsSelf.callHackage "th-abstraction" "0.6.0.0" {} ;
-      cleff = hlib.markUnbroken hpkgsSuper.cleff;
-    };
 
-  ek.haskell.extensions.package-set-for.ghc98 = hpkgsSelf: hpkgsSuper:
-    { effectful-plugin = hpkgsSelf.callHackage "effectful-plugin" "1.1.0.1" {} ;
-      th-abstraction = hpkgsSelf.callHackage "th-abstraction" "0.6.0.0" {} ;
-      effectful-th = hlib.doJailbreak hpkgsSuper.effectful-th;
-    };
-  
-  ek.haskell.extensions.package-set-for.ghc94-fast =
+   ek.haskell.extensions.base-package-set = hpkgsSelf: hpkgsSuper:
+     { effectful-plugin = hpkgsSelf.callHackage "effectful-plugin" "1.1.0.2" {} ;
+       effectful-th = hlib.doJailbreak hpkgsSuper.effectful-th;
+       th-abstraction = hpkgsSelf.callHackage "th-abstraction" "0.6.0.0" {} ;
+       bifunctors = hpkgsSelf.callHackage "bifunctors" "5.6.1" {} ;
+       free = hpkgsSelf.callHackage "free" "5.2" {} ;
+
+       aeson = hpkgsSelf.callHackage "aeson" "2.2.1.0" {} ;
+
+       glib = hpkgsSelf.callHackage "glib" "0.13.10.0" { glib = pkgsSuper.glib; } ;
+       cairo = hpkgsSelf.callHackage "cairo" "0.13.10.0" { cairo = pkgsSuper.cairo; } ;
+       pango = hpkgsSelf.callHackage "pango" "0.13.10.0" { pango = pkgsSuper.pango; } ;
+       http-conduit = hpkgsSelf.callHackage "http-conduit" "2.3.8.3" { } ;
+       attoparsec-aeson = hpkgsSelf.callHackage "attoparsec-aeson" "2.2.0.1" { } ;
+       
+       tagged = hpkgsSelf.callHackage "tagged" "0.8.8" {} ;
+       tasty = hpkgsSelf.callHackage "tasty" "1.5" {} ;
+       
+       cleff = hlib.markUnbroken hpkgsSuper.cleff;
+       xmonad-contrib = hpkgsSelf.callHackage "xmonad-contrib" "0.17.1" {} ;
+       xmonad = hpkgsSelf.callHackage "xmonad" "0.17.2" {} ;
+       xmobar = hpkgsSelf.callHackage "xmobar" "0.47.2" {} ;
+     };
+
+   ek.haskell.extensions.package-set-for.ghc92 =
+     hpkgsSelf: hpkgsSuper:
+     {
+     };
+     
+   ek.haskell.extensions.package-set-for.ghc94 =
+     hpkgsSelf: hpkgsSuper:
+     {
+     };
+
+   ek.haskell.extensions.package-set-for.ghc96 = 
+     hpkgsSelf: hpkgsSuper:
+     {
+     };
+   
+   ek.haskell.extensions.package-set-for.ghc98 =
+     hpkgsSelf: hpkgsSuper:
+     {
+     };
+
+  ek.haskell.extensions.base =
     lib.composeManyExtensions
       [ hext.with-callCabal
         hext.override-mkDerivation-fast
-        hext.package-set-for.ghc94
-      ];
-
-  ek.haskell.extensions.package-set-for.ghc98-fast =
-    lib.composeManyExtensions
-      [ hext.with-callCabal
-        hext.override-mkDerivation-fast
-        hext.package-set-for.ghc98
+        hext.base-package-set
       ];
 }
 

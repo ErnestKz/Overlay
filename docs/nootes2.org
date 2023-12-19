@@ -58,3 +58,20 @@ few contexts in which dependencies can be swizzled:
   - that picks the modules it wants
   - in this case may want more granular tools to use
 
+
+
+
+
+
+
+- Two dependencies
+  - xmonad
+  - minmacs
+
+- Dealing with private parts of the config:
+  - Private sources that we do not even want the names to be public
+  - One entry point to the private section
+    - and this is perhaps just an overlay
+
+
+- various ways of selecting where the sources come from
