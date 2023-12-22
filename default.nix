@@ -2,7 +2,9 @@ let
   inherit (builtins)
     pathExists
     getEnv
-    hasAttr ;
+    hasAttr
+    trace
+  ;
   
   config-path = (getEnv "HOME") + "/.sources.nix";
   config-exists = pathExists config-path;
@@ -12,6 +14,7 @@ let
   originalOverlay = import ./flake;
   finalOverlay =
     if config-exists && hasOverlay
-    then redirectedOverlay
+    then trace "Redirect: Using Overlay defined in ${config-path}"
+      redirectedOverlay
     else originalOverlay ;
 in originalOverlay // { redirect = finalOverlay; }
