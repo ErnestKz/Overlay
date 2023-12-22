@@ -29,9 +29,8 @@
       { sources = pinned-sources // { overlay = ../overlay.nix; };
       
         overlay = import self.sources.overlay;
-        overlay-pinned = import self.sources.overlay self.sources;
         
         nixpkgs-with-overlay = import self.sources.nixpkgs
-          { overlays = [ self.overlay-pinned ]; };
+          { overlays = [ self.overlay ]; };
       });
 }
