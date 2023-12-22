@@ -27,13 +27,21 @@
       sources =
         (lib.mapAttrs
           (_: input: input.outPath)
-          inputs) // { Overlay = ../.; };
+          inputs) //
+        { overlay = ../.; };
+      
+      overlay-pinned = import ../. sources;
+      overlay = import ../.;
+      
+      nixpkgs-with-overlay =
+        import sources.nixpkgs
+          { overlays = [ overlay-pinned ]; };
     in 
-      { Overlay' = import ../. sources;
-        Overlay  = import ../.;
-        inherit
-          inputs
-          sources
-        ;
+      { inherit
+        inputs
+        sources
+        overlay
+        overlay-pinned
+        nixpkgs-with-overlay ;
       };
 }

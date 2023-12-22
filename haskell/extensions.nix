@@ -5,7 +5,8 @@ let
   lib = pkgsSuper.lib;
 in  
 {
-  ek.haskell.extensions.with-callCabal = hpkgsSelf: hpkgsSuper:
+  ek.haskell.extensions.with-callCabal =
+    hpkgsSelf: hpkgsSuper:
     { callCabal = packageName: packageDirectory: argumentSet:
         pkgsSelf.ek.haskell.lib.callCabalWith
           hpkgsSelf
@@ -14,7 +15,8 @@ in
           argumentSet ;
     };
     
-  ek.haskell.extensions.override-mkDerivation-fast = hpkgsSelf: hpkgsSuper:
+  ek.haskell.extensions.override-mkDerivation-fast =
+    hpkgsSelf: hpkgsSuper:
     { mkDerivation = args: hpkgsSuper.mkDerivation (args // {
         doCheck = false;
         doHoogle = false;
@@ -24,7 +26,8 @@ in
     };
 
   # either overrideCabal or overrideAttrs
-  ek.haskell.extensions.override-mkDerivation-passthru = hpkgsSelf: hpkgsSuper:
+  ek.haskell.extensions.override-mkDerivation-passthru =
+    hpkgsSelf: hpkgsSuper:
     { mkDerivation = args: (hpkgsSuper.mkDerivation args).overrideAttrs
       (oldAttrs: lib.recursiveUpdate oldAttrs
         (let library-deps = oldAttrs.passthru.getCabalDeps.libraryHaskellDepends;
@@ -39,7 +42,8 @@ in
          in { passthru.deps = library-deps-names; })) ;
     };
 
-   ek.haskell.extensions.override-mkDerivation-passthru-deps = hpkgsSelf: hpkgsSuper:
+  ek.haskell.extensions.override-mkDerivation-passthru-deps =
+    hpkgsSelf: hpkgsSuper:
     { mkDerivation = args: (hpkgsSuper.mkDerivation args).overrideAttrs
       (oldAttrs: lib.recursiveUpdate oldAttrs
         (let library-deps = oldAttrs.passthru.getCabalDeps.libraryHaskellDepends;
@@ -59,13 +63,15 @@ in
   #     ;
   #   };  
     
-   ek.haskell.extensions.annotated-boot-libs = hpkgsSelf: hpkgsSuper:
+   ek.haskell.extensions.annotated-boot-libs =
+     hpkgsSelf: hpkgsSuper:
      {
        # base = { boot = "base"; };
      };
 
 
-   ek.haskell.extensions.base-package-set = hpkgsSelf: hpkgsSuper:
+   ek.haskell.extensions.base-package-set =
+     hpkgsSelf: hpkgsSuper:
      { effectful-plugin = hpkgsSelf.callHackage "effectful-plugin" "1.1.0.2" {} ;
        effectful-th = hlib.doJailbreak hpkgsSuper.effectful-th;
        th-abstraction = hpkgsSelf.callHackage "th-abstraction" "0.6.0.0" {} ;

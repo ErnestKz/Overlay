@@ -69,6 +69,8 @@ executable haskell-test
                       , TypeFamilyDependencies
                       , DataKinds
                       , LambdaCase
+                      , DerivingVia
+                      , BlockArguments
 
     -- Other library packages from which modules are imported.
     build-depends:    base

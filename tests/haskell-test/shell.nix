@@ -1,10 +1,14 @@
 let
   nixpkgs = import ../nixpkgs.nix;
-  haskell-test = nixpkgs.ek.haskell.package-set.ghc94.callCabal
+  hpkgs = nixpkgs.ek.haskell.package-set.ghc94;
+  haskell-test = hpkgs.callCabal
     "haskell-test" ./. {};
 in
 with nixpkgs;
 mkShell {
-  buildInputs = [ nixpkgs.cabal-install ];
+  buildInputs =
+    [ cabal-install
+      haskell.packages.ghc94.haskell-language-server
+    ];
   inputsFrom = [ haskell-test.env ];
 }
