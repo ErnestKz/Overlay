@@ -27,9 +27,7 @@
         };
     in lib.makeScope newScope (self:
       { sources = pinned-sources // { overlay = ../overlay.nix; };
-      
         overlay = import self.sources.overlay;
-        
         nixpkgs-with-overlay = import self.sources.nixpkgs
           { overlays = [ self.overlay ]; };
       });
