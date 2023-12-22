@@ -28,10 +28,10 @@
         (lib.mapAttrs
           (_: input: input.outPath)
           inputs) //
-        { overlay = ../.; };
+        { overlay = ../overlay.nix; };
       
-      overlay-pinned = import ../. sources;
-      overlay = import ../.;
+      overlay-pinned = import ../overlay.nix sources;
+      overlay = import ../overlay.nix;
       
       nixpkgs-with-overlay =
         import sources.nixpkgs
