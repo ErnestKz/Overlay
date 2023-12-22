@@ -6,6 +6,11 @@
   inputs.disko.url            = "github:nix-community/disko";
   inputs.impermanence.url     = "github:nix-community/impermanence";
 
+  inputs.ek-xmonad =
+    { url = "github:ErnestKz/ek-xmonad/master";
+      flake = false;
+    };
+
   outputs =
     { self
     , nixpkgs-unstable
@@ -13,6 +18,7 @@
     , home-manager
     , disko
     , impermanence
+    , ek-xmonad
     }:    
     let
       inherit (nixpkgs-unstable) lib newScope;
@@ -23,7 +29,8 @@
             nixos-hardware
             home-manager
             disko
-            impermanence ;
+            impermanence
+            ek-xmonad ;
         };
     in lib.makeScope newScope (self:
       { sources = pinned-sources // { overlay = ../overlay.nix; };
