@@ -1,20 +1,8 @@
 let
-  inherit (builtins)
-    pathExists
-    getEnv
-    hasAttr
-    trace
-  ;
-  
-  config-path = (getEnv "HOME") + "/.sources.nix";
-  config-exists = pathExists config-path;
-  hasOverlay = hasAttr "Overlay" (import config-path);
-  redirectedOverlay = (import config-path).Overlay;
-
+  redirect-overlay = import ./lib/redirect.nix;
+  pkgs = import (import ./flake).sources.nixpkgs
+    { overlays = [ redirect-overlay ]; };
+  inherit (pkgs.ek.lib.redirect)
+    redirect;
   originalOverlay = import ./flake;
-  finalOverlay =
-    if config-exists && hasOverlay
-    then trace "Redirect: Using Overlay defined in ${config-path}"
-      redirectedOverlay
-    else originalOverlay ;
-in originalOverlay // { redirect = finalOverlay; }
+in originalOverlay // { redirect = redirect "Overlay" originalOverlay; }

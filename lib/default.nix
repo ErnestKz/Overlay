@@ -4,4 +4,5 @@ pkgsSuper.ek.lib.overlay.combine-many.recursive-this
     (import ./git.nix)
     (import ./disko.nix)
     (import ./modules.nix)
+    (import ./redirect.nix)
   ]
