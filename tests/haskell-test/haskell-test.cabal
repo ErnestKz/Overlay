@@ -61,7 +61,7 @@ executable haskell-test
     main-is:          Main.hs
 
     -- Modules included in this executable, other than Main.
-    -- other-modules:
+    other-modules: EdslEffect
 
     -- LANGUAGE extensions used by modules in this package.
     default-extensions: TemplateHaskell
@@ -71,6 +71,13 @@ executable haskell-test
                       , LambdaCase
                       , DerivingVia
                       , BlockArguments
+                      , Arrows
+                      , NoImplicitPrelude
+
+                      -- , RebindableSyntax
+                      , LinearTypes
+                      , QualifiedDo
+                      , AllowAmbiguousTypes
 
     -- Other library packages from which modules are imported.
     build-depends:    base
@@ -79,12 +86,16 @@ executable haskell-test
                     , effectful-th
                     , effectful-plugin
 
+                    , profunctors
+
+                    , async
+
                     -- , cleff
                     -- , cleff-plugin
 
     -- Directories containing source files.
     hs-source-dirs:   app
-    ghc-options: -fplugin=Effectful.Plugin
+    ghc-options: -fplugin=Effectful.Plugin -threaded
 
     -- Base language which the package is written in.
     default-language: GHC2021
