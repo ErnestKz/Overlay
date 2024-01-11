@@ -2,7 +2,7 @@ pkgsSelf: pkgsSuper:
 let
   hext = pkgsSelf.ek.haskell.extensions;
   lib = pkgsSuper.lib;
-in    
+in
 {
   ek.haskell.package-set.ghc92 =
     pkgsSelf.haskell.packages.ghc92.extend
@@ -10,7 +10,7 @@ in
         [ hext.base
           hext.package-set-for.ghc92
         ]);
-  
+
   ek.haskell.package-set.ghc94 =
     pkgsSelf.haskell.packages.ghc94.extend
       (lib.composeManyExtensions

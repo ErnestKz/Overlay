@@ -3,7 +3,7 @@ let
   hext = pkgsSelf.ek.haskell.extensions;
   hlib = pkgsSuper.haskell.lib;
   lib = pkgsSuper.lib;
-in  
+in
 {
   ek.haskell.extensions.with-callCabal =
     hpkgsSelf: hpkgsSuper:
@@ -14,7 +14,7 @@ in
           packageDirectory
           argumentSet ;
     };
-    
+
   ek.haskell.extensions.override-mkDerivation-fast =
     hpkgsSelf: hpkgsSuper:
     { mkDerivation = args: hpkgsSuper.mkDerivation (args // {
@@ -61,8 +61,8 @@ in
   #   { mkDerivation = args: hlib.overrideCabal (hpkgsSuper.mkDerivation args)
   #     (drv: { passthru.again = "hello 2 "; })
   #     ;
-  #   };  
-    
+  #   };
+
    ek.haskell.extensions.annotated-boot-libs =
      hpkgsSelf: hpkgsSuper:
      {
@@ -74,7 +74,6 @@ in
      hpkgsSelf: hpkgsSuper:
      { effectful-plugin = hpkgsSelf.callHackage "effectful-plugin" "1.1.0.2" {} ;
        effectful-th = hlib.doJailbreak hpkgsSuper.effectful-th;
-       th-abstraction = hpkgsSelf.callHackage "th-abstraction" "0.6.0.0" {} ;
        bifunctors = hpkgsSelf.callHackage "bifunctors" "5.6.1" {} ;
        free = hpkgsSelf.callHackage "free" "5.2" {} ;
 
@@ -85,31 +84,36 @@ in
        pango = hpkgsSelf.callHackage "pango" "0.13.10.0" { pango = pkgsSuper.pango; } ;
        http-conduit = hpkgsSelf.callHackage "http-conduit" "2.3.8.3" { } ;
        attoparsec-aeson = hpkgsSelf.callHackage "attoparsec-aeson" "2.2.0.1" { } ;
-       
+
        tagged = hpkgsSelf.callHackage "tagged" "0.8.8" {} ;
        tasty = hpkgsSelf.callHackage "tasty" "1.5" {} ;
-       
+
        cleff = hlib.markUnbroken hpkgsSuper.cleff;
        xmonad-contrib = hpkgsSelf.callHackage "xmonad-contrib" "0.17.1" {} ;
        xmonad = hpkgsSelf.callHackage "xmonad" "0.17.2" {} ;
        xmobar = hpkgsSelf.callHackage "xmobar" "0.47.2" {} ;
+
+       # th-abstraction = hpkgsSelf.callHackage "th-abstraction" "0.6.0.0" {} ;
+       th-abstraction = hpkgsSelf.callHackage "th-abstraction" "0.5.0.0" {} ;
+       linear-generics = hpkgsSelf.callHackage "linear-generics" "0.2.2" {} ;
+       linear-base = hpkgsSelf.callHackage "linear-base" "0.4.0" {} ;
      };
 
    ek.haskell.extensions.package-set-for.ghc92 =
      hpkgsSelf: hpkgsSuper:
      {
      };
-     
+
    ek.haskell.extensions.package-set-for.ghc94 =
      hpkgsSelf: hpkgsSuper:
      {
      };
 
-   ek.haskell.extensions.package-set-for.ghc96 = 
+   ek.haskell.extensions.package-set-for.ghc96 =
      hpkgsSelf: hpkgsSuper:
      {
      };
-   
+
    ek.haskell.extensions.package-set-for.ghc98 =
      hpkgsSelf: hpkgsSuper:
      {
@@ -122,4 +126,3 @@ in
         hext.base-package-set
       ];
 }
-
